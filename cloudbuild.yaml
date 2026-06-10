@@ -1,12 +1,12 @@
 steps:
   # Step 1: Checkout the code from GitHub
   # - name: 'gcr.io/cloud-builders/git'
-  #   args: ['clone', 'https://github.com/Misbahhassan08/CloudTest.git']
+  #   args: ['clone', 'https://github.com/Quratulain983/todo-app-bakcned.git']
 
   # Step 2: Change directory to the repository
   - name: 'gcr.io/cloud-builders/docker'
-    # dir: 'CloudTest'
-    args: ['build', '-t', 'gcr.io/vertex-model-training/CloudTest', '.']
+    # dir: 'todo-app-bakcned.git'
+    args: ['build', '-t', 'gcr.io/vertex-model-training/todo-app-bakcned', '.']
 
 
 
@@ -14,8 +14,8 @@ steps:
 
   # Step 3: Push the Docker image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    # dir: 'CloudTest'
-    args: ['push', 'gcr.io/vertex-model-training/CloudTest']
+    # dir: 'todo-app-bakcned'
+    args: ['push', 'gcr.io/vertex-model-training/todo-app-bakcned']
 
   # Step 4: Deploy the Docker image to Google Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -23,9 +23,9 @@ steps:
       - 'gcloud'
       - 'run'
       - 'deploy'
-      - 'CloudTest'
+      - 'todo-app-bakcned'
       - '--image'
-      - 'gcr.io/vertex-model-training/CloudTest'
+      - 'gcr.io/vertex-model-training/todo-app-bakcned'
       - '--platform'
       - 'managed'
       - '--region'

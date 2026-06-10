@@ -1,12 +1,19 @@
-FROM python:3.12-slim
+Dockerfile code:::
+[2:19 PM]# Use the official Python image.
+# https://hub.docker.com/_/python
+FROM python:3.10
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt gunicorn
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
 
-COPY . .
 
-EXPOSE 8080
 
-CMD ["gunicorn", "newproject.wsgi:application", "--bind", "0.0.0.0:8080"]
+ENV PORT 8080
+
+
+
+COPY . /app/
+
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 my_site.wsgi:application
