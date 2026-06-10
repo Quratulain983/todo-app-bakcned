@@ -1,6 +1,4 @@
-Dockerfile code:::
-[2:19 PM]# Use the official Python image.
-# https://hub.docker.com/_/python
+
 FROM python:3.10
 
 WORKDIR /app
