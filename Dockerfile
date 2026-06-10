@@ -14,4 +14,4 @@ ENV PORT 8080
 
 COPY . /app/
 
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 my_site.wsgi:application
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 newproject.wsgi:application
