@@ -17,8 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path,include
+from cloud.views import health_check 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-      path('cloud/', include('cloud.urls')),
+    path('cloud/', include('cloud.urls')),
+    path("health/", health_check),
 ]
