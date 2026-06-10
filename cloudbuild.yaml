@@ -1,40 +1,32 @@
 steps:
-  # Step 1: Checkout the code from GitHub
-  # - name: 'gcr.io/cloud-builders/git'
-  #   args: ['clone', 'https://github.com/Quratulain983/todo-app-bakcned.git']
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/vertex-model-training/todo-app-bakcned'
+      - '.'
 
-  # Step 2: Change directory to the repository
-  - name: 'gcr.io/cloud-builders/docker'
-    # dir: 'todo-app-bakcned.git'
-    args: ['build', '-t', 'gcr.io/vertex-model-training/todo-app-bakcned', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/vertex-model-training/todo-app-bakcned'
 
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'run'
+      - 'deploy'
+      - 'todo-app-bakcned'
+      - '--image'
+      - 'gcr.io/vertex-model-training/todo-app-bakcned'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
+      - '--quiet'
 
+timeout: '1200s'
 
-
-
-  # Step 3: Push the Docker image to Google Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    # dir: 'todo-app-bakcned'
-    args: ['push', 'gcr.io/vertex-model-training/todo-app-bakcned']
-
-  # Step 4: Deploy the Docker image to Google Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args:
-      - 'gcloud'
-      - 'run'
-      - 'deploy'
-      - 'todo-app-bakcned'
-      - '--image'
-      - 'gcr.io/vertex-model-training/todo-app-bakcned'
-      - '--platform'
-      - 'managed'
-      - '--region'
-      - 'us-central1'
-      - '--allow-unauthenticated'
-      - '--quiet'
-
-
-
-timeout: '1200s'  # Adjust timeout as necessary
 options:
-  logging: CLOUD_LOGGING_ONLY
+  logging: CLOUD_LOGGING_ONLY
